@@ -15,17 +15,18 @@ User.init(
       type: DataTypes.STRING,
       allowNull: false,
     },
-    email: {
+    password: {
       type: DataTypes.STRING,
       allowNull: false,
       validate: {
-        isEmail: true
+        len: [8],
       }
-    },
+    }
   },
   {
     sequelize,
     timestamps: false,
+    freezeTableName: true,
     underscored: true,
     modelName: 'user'
   }
