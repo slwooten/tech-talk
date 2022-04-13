@@ -26,7 +26,8 @@ router.get('/:id', async (req, res) => {
       }
     });
 
-    res.status(200).json(oneBlog);
+    const blog = oneBlog.get({ plain: true });
+    res.render('selected-blog', { blog });
 
   } catch (err) {
     res.status(500).json(err);

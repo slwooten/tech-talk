@@ -27,7 +27,9 @@ router.get('/:id', async (req, res) => {
 
     oneUser.password = undefined;
 
-    res.status(200).json(oneUser);
+    const user = oneUser.get({ plain: true });
+    res.render('dashboard', { user })
+    console.log(user);
 
   } catch (err) {
     res.status(500).json(err);
