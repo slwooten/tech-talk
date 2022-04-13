@@ -33,4 +33,38 @@ router.get('/:id', async (req, res) => {
   }
 });
 
+// route for updating blog by id //
+router.put('/:id', async (req, res) => {
+  try {
+    const updatedBlog = await Blog.update(
+      {
+        title: req.body.title,
+        content: req.body.content,
+      },
+      {
+        where: {
+          id: req.params.id,
+        },
+      },
+    );
+    res.status(200).json(updatedBlog);
+  } catch (err) {
+    res.status(500).json(err);
+  }
+});
+
+// route for deleting blog by id //
+router.delete('/:id', async (req, res) => {
+  try {
+    const deletedBlog = await Blog.destroy({
+      where: {
+        id: req.params.id,
+      },
+    });
+    res.status(200).json(deletedBlog);
+  } catch (err) {
+    res.status(500).json(err);
+  }
+});
+
 module.exports = router;
