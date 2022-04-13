@@ -1,10 +1,14 @@
 const router = require('express').Router();
-const Blog = require('../models/Blog');
+const { Blog, User } = require('../models');
 
 // route to get all blogs //
 router.get('/', async (req, res) => {
   try {
-    const blogData = await Blog.findAll()
+    const blogData = await Blog.findAll({
+      include: {
+        model: User, attributes: { exclude: ["password"] } 
+      }
+    })
       
     res.json(blogData);
 
