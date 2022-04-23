@@ -2,6 +2,7 @@ const path = require('path');
 const express = require('express');
 const session = require('express-session');
 const exphbs = require('express-handlebars');
+const SequelizeStore = require('connect-session-sequelize')(session.Store);
 
 const routes = require('./controllers');
 const sequelize = require('./config/connection');
@@ -12,8 +13,14 @@ const PORT = process.env.PORT || 3001;
 
 const sess = {
   secret: 'c8f0b9b6-8eb1-46d5-9fdb-50a052b694be',
+  cookie: {
+    maxAge: 86400,
+  },
   resave: false,
-  saveUninitialized: false,
+  saveUninitialized: true,
+  store: new SequelizeStore({
+    db: sequelize,
+  }),
 };
 
 app.use(session(sess));

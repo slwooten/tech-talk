@@ -34,7 +34,24 @@ router.get('/:id', async (req, res) => {
   }
 });
 
-// route for updating blog by id //
+// route for getting one blog by id TO EDIT // 
+router.get('/edit/:id', async (req, res) => {
+  try {
+    const oneBlog = await Blog.findByPk(req.params.id, {
+      include: {
+        model: User, attributes: { exclude: ["password"] }
+      }
+    });
+
+    const blog = oneBlog.get({ plain: true });
+    res.render('edit-blog', { blog });
+
+  } catch (err) {
+    res.status(500).json(err);
+  }
+});
+
+// route for submitting updated blog by id //
 router.put('/:id', async (req, res) => {
   try {
     const updatedBlog = await Blog.update(
